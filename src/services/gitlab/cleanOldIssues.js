@@ -19,7 +19,7 @@ module.exports = async () => {
       await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
       await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
       totalIssuesClosed++;
-    } catch (eror) {
+    } catch (error) {
       console.error(`Error closing issue ${issue.iid}`)
     }
   }
