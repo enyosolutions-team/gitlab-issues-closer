@@ -11,14 +11,18 @@ const headers = {
 
 module.exports = async () => {
   const issues = await gitlab.getIssues(issuesUrl, headers, thresholdDate);
+  let totalIssuesClosed = 0;
 
   for (const issue of issues) {
     try {
       const body = { state_event: 'close' }
       await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
       await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
+      totalIssuesClosed++;
     } catch (eror) {
       console.error(`Error closing issue ${issue.iid}`)
     }
   }
+
+  console.log(`${totalIssuesClosed} issues closed from ${issues.length} issues older than ${config.threshold} days found.`);
 }
