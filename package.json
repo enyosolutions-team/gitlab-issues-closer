@@ -1,0 +1,9 @@
+{
+  "name": "issues_cleaner",
+  "version": "1.0.0",
+  "description": "Script to clean old issues on GitLab",
+  "main": "src/index.js",
+  "repository": "https://gitlab.com/lbandrade/issues_cleaner.git",
+  "license": "MIT",
+  "private": true
+}
