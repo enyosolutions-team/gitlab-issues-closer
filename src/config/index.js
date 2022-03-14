@@ -4,5 +4,5 @@ module.exports = {
   apiUrl: process.env.API_URL,
   threshold: parseInt(process.env.THRESHOLD),
   personalToken: process.env.PERSONAL_TOKEN,
-  projectId: parseInt(process.env.PROJECT_ID)
+  projectId: parseInt(process.env.PROJECT_ID),
 }
