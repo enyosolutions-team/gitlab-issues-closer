@@ -17,5 +17,16 @@ module.exports = {
       data: body
     })
     return res.data
+  },
+  postCommentOnIssue: async (url, headers, issueIid, message) => {
+    const res = await axios({
+      method: 'post',
+      url: `${url}/${issueIid}/notes`,
+      headers: headers,
+      data: {
+        body: message
+      }
+    })
+    return res.data
   }
 }
