@@ -5,4 +5,5 @@ module.exports = {
   threshold: parseInt(process.env.THRESHOLD),
   personalToken: process.env.PERSONAL_TOKEN,
   projectId: parseInt(process.env.PROJECT_ID),
+  message: process.env.MESSAGE
 }
