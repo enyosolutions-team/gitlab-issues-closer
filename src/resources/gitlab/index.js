@@ -5,7 +5,7 @@ module.exports = {
     try {
       const res = await axios({
         method: 'get',
-        url: `${url}?updated_before=${thresholdDate.toISOString()}&state=opened`,
+        url: `${url}?updated_before=${thresholdDate.toISOString()}&state=opened&per_page=100`,
         headers: headers
       })
       return res.data;
