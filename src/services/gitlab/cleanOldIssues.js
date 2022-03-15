@@ -17,8 +17,9 @@ module.exports = async () => {
     try {
       const body = { state_event: 'close' }
       await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
-      await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
+      const updatedIssue = await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
       totalIssuesClosed++;
+      console.log(`Issue ${issue.iid} closed [%s]`, updatedIssue);
     } catch (error) {
       console.error(`Error closing issue ${issue.iid}`)
     }
