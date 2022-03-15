@@ -11,10 +11,10 @@ Firstly, install the npm packages and create a .env file.
 yarn install
 
 # Create a .env file from example
-cp src/config/.env.example src/config/.env
+cp .env.example .env
 ```
 
-Then, fill the fields found in `src/config/.env`.
+Then, fill the fields found in `.env`.
 
 ```shell
 API_URL=https://gitlab.com/api/v4/projects # Gitlab API URL
