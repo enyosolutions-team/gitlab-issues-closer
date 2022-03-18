@@ -8,22 +8,29 @@ const issuesUrl = `${baseUrl}/issues`;
 const headers = {
   Authorization: `Bearer ${config.personalToken}`
 };
+let totalIssuesClosed = 0;
+
+const cleanOldIssues = async (issue) => {
+  try {
+    const body = { state_event: 'close' }
+    await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
+    const updatedIssue = await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
+    totalIssuesClosed++;
+    console.log(`Issue ${issue.iid} closed [%s]`, updatedIssue);
+  } catch (error) {
+    console.error(`Error closing issue ${issue.iid}`)
+  }
+}
 
 module.exports = async () => {
   const issues = await gitlab.getIssues(issuesUrl, headers, thresholdDate);
-  let totalIssuesClosed = 0;
+  const promises = []
 
   for (const issue of issues) {
-    try {
-      const body = { state_event: 'close' }
-      await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
-      const updatedIssue = await gitlab.updateIssue(issuesUrl, headers, issue.iid, body)
-      totalIssuesClosed++;
-      console.log(`Issue ${issue.iid} closed [%s]`, updatedIssue);
-    } catch (error) {
-      console.error(`Error closing issue ${issue.iid}`)
-    }
+    promises.push(cleanOldIssues(issue))
   }
 
-  console.log(`${totalIssuesClosed} issues closed from ${issues.length} issues older than ${config.threshold} days found.`);
+  Promise.all(promises).then(() => {
+    console.log(`${totalIssuesClosed} issues closed from ${issues.length} issues older than ${config.threshold} days found.`);
+  })
 }
