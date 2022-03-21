@@ -10,7 +10,7 @@ const headers = {
 };
 let totalIssuesClosed = 0;
 
-const cleanOldIssues = async (issue) => {
+const cleanSingleIssue = async (issue) => {
   try {
     const body = { state_event: 'close' }
     await gitlab.postCommentOnIssue(issuesUrl, headers, issue.iid, config.message)
@@ -27,7 +27,7 @@ module.exports = async () => {
   const promises = []
 
   for (const issue of issues) {
-    promises.push(cleanOldIssues(issue))
+    promises.push(cleanSingleIssue(issue))
   }
 
   Promise.all(promises).then(() => {
